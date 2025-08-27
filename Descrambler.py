@@ -1,5 +1,7 @@
 import requests
 import time
+from dotenv import load_dotenv
+import os
 
 def factorial(num):
     newNum = 1
@@ -49,13 +51,13 @@ def GetWordCombinations(baseWord, curLength):
             print(baseWord)
 
 def CheckWord(word):
-    url = "https://mashape-community-urban-dictionary.p.rapidapi.com/define"
+    url = os.environ.get("DictionaryUrl")
 
     querystring = {"term":word}
 
     headers = {
-        "x-rapidapi-key": "a85dcfd916msh4297cecd3f4bb06p16e23cjsn05408e18591a",
-        "x-rapidapi-host": "mashape-community-urban-dictionary.p.rapidapi.com"
+        "x-rapidapi-key": os.environ.get("DictionaryApi"),
+        "x-rapidapi-host": os.environ.get("DictionaryHost")
     }
 
     response = requests.get(url, headers=headers, params=querystring)
@@ -84,6 +86,7 @@ def PrintWord(wordsInfo):
             print(f"You are on word {curWord} of {maxWord}.\n Press Y/y to see the next one, anything else to stop.")
             answer = input("Input here:")
 
+load_dotenv()
 
 name = input("Input a word you want to descramble: ")
 answer = input("Do you want to descramble this word or get the possible combinations(Y/y for descramble and N/n for combinations): ")
